@@ -179,9 +179,4 @@ public class SpotifyImpl implements Spotify {
                 .flatMap(track -> track.getArtists().stream())
                 .collect(Collectors.toList());
     }
-    @Override
-    public void changeMap (Map<Playlist, List<Track>> mapNew){
-        map.clear();
-        map.putAll(mapNew);
-    }
 }

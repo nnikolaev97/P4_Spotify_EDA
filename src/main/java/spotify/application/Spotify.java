@@ -28,7 +28,6 @@ public interface Spotify {
     List<Playlist> findByDatesByTrackDate(LocalDate start, LocalDate end, String artista);// devuelve las playlist que tengan canciones con ese artista
     List<Playlist> getAllPlaylist();
 
-    void changeMap(Map<Playlist, List<Track>> mapNew);
 
 
 }

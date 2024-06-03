@@ -38,37 +38,19 @@ class SpotifyImplTest {
             List.of("Electronical", "Rock"), LocalDate.now(), "Devil_Trigger", 400);
 
     static Spotify spotify = new SpotifyImpl();
-    static Map<Playlist, List<Track>> mapEmpty = new HashMap<>();
 
-    static Map<Playlist, List<Track>> mapInitialized = new HashMap<>(){
-        {
-            put(playlist1, new ArrayList<>());
-        }
-    };
 
-    static Map<Playlist, List<Track>> mapInitializedV2 = new HashMap<>(){
-        {
-            put(playlist1, new ArrayList<>());
-            put(playlist2, new ArrayList<>());
-        }
-    };
 
     @BeforeAll
     static void setup(){
-        mapInitialized.get(playlist1).add(track1);
-        mapInitialized.get(playlist1).add(track3);
 
-        mapInitializedV2.get(playlist1).add(track1);
-        mapInitializedV2.get(playlist1).add(track3);
-        mapInitializedV2.get(playlist2).add(track2);
-        mapInitializedV2.get(playlist2).add(track4);
     }
 
     @Test
     void addPlaylist() {
         assertTrue(spotify.addPlaylist(playlist1));
         assertFalse(spotify.addPlaylist(playlist1));
-        spotify.changeMap(mapEmpty);
+
     }
 
     @Test
@@ -77,12 +59,11 @@ class SpotifyImplTest {
         IllegalArgumentException illegalArgumentExceptionNoPlaylist = assertThrows(IllegalArgumentException.class, () ->
                 spotify.addTrackToPlaylist(playlist2, track1)
         );
-        /*spotify.addPlaylist(playlist1);
+        spotify.addPlaylist(playlist1);
 
         spotify.addTrackToPlaylist(playlist1, track1);
-         */
 
-        spotify.changeMap(mapInitialized);
+
 
         IllegalArgumentException illegalArgumentExceptionAlreadyInPlaylist = assertThrows(IllegalArgumentException.class, () ->
                 spotify.addTrackToPlaylist(playlist1, track1)
@@ -91,7 +72,7 @@ class SpotifyImplTest {
         assertEquals("Playlist" + playlist2.getId() + " does not exist in Spotify.", illegalArgumentExceptionNoPlaylist.getMessage(), "Exception message should match");
         assertEquals("Song " + track1.getTitle() + " already exists in the list.", illegalArgumentExceptionAlreadyInPlaylist.getMessage(), "Exception message should match");
 
-        spotify.changeMap(mapEmpty);
+
     }
 
     @Test
@@ -100,12 +81,12 @@ class SpotifyImplTest {
         IllegalArgumentException illegalArgumentExceptionNoPlaylist = assertThrows(IllegalArgumentException.class, () ->
                 spotify.addTrackToPlaylist(playlist2, 1, track1)
         );
-        /*spotify.addPlaylist(playlist1);
+        spotify.addPlaylist(playlist1);
 
         spotify.addTrackToPlaylist(playlist1, track1);
 
-         */
-        spotify.changeMap(mapInitialized);
+
+
 
         IllegalArgumentException illegalArgumentExceptionAlreadyInPlaylist = assertThrows(IllegalArgumentException.class, () ->
                 spotify.addTrackToPlaylist(playlist1, track1)
@@ -124,7 +105,7 @@ class SpotifyImplTest {
         assertEquals("Index cannot have that value.", arrayIndexOutOfBoundsExceptionLow.getMessage(), "Exception message should match");
         assertEquals("Index cannot have that value.", arrayIndexOutOfBoundsExceptionHigh.getMessage(), "Exception message should match");
 
-        spotify.changeMap(mapEmpty);
+
     }
 
     @Test
@@ -135,17 +116,14 @@ class SpotifyImplTest {
         );
         assertEquals("Playlist" + playlist2.getId() + " does not exist in Spotify.", illegalArgumentExceptionNoPlaylist.getMessage(), "Exception message should match");
 
-        /*spotify.addPlaylist(playlist1);
+        spotify.addPlaylist(playlist1);
 
         spotify.addTrackToPlaylist(playlist1, track1);
 
-         */
-
-        spotify.changeMap(mapInitialized);
 
         assertFalse(spotify.getTracks(playlist1).isEmpty());
 
-        spotify.changeMap(mapEmpty);
+
     }
 
     @Test
@@ -153,18 +131,16 @@ class SpotifyImplTest {
 
         assertTrue(spotify.findByGenre("Electronical").isEmpty());
 
-        /*spotify.addPlaylist(playlist1);
+        spotify.addPlaylist(playlist1);
 
         spotify.addTrackToPlaylist(playlist1, track1);
 
-         */
 
-        spotify.changeMap(mapInitialized);
 
         assertTrue(spotify.findByGenre("WebiWabo").isEmpty());
         assertFalse(spotify.findByGenre("Rock").isEmpty());
 
-        spotify.changeMap(mapEmpty);
+
     }
 
     @Test
@@ -172,17 +148,14 @@ class SpotifyImplTest {
 
         assertTrue(spotify.findByArtist("Casey Edwards").isEmpty());
 
-        /*spotify.addPlaylist(playlist1);
+        spotify.addPlaylist(playlist1);
 
         spotify.addTrackToPlaylist(playlist1, track1);
 
-         */
-        spotify.changeMap(mapInitialized);
+
 
         assertTrue(spotify.findByArtist("WebiWabo").isEmpty());
         assertFalse(spotify.findByArtist("Victor Borba").isEmpty());
-
-        spotify.changeMap(mapEmpty);
 
     }
 
@@ -194,19 +167,15 @@ class SpotifyImplTest {
         );
         assertEquals("Playlist" + playlist1.getId() + " does not exist in Spotify.", illegalArgumentExceptionNoPlaylist.getMessage(), "Exception message should match");
 
-        /*spotify.addPlaylist(playlist1);
+        spotify.addPlaylist(playlist1);
 
         spotify.addTrackToPlaylist(playlist1, track1);
         spotify.addTrackToPlaylist(playlist1, track2);
         spotify.addTrackToPlaylist(playlist1, track3);
 
-        */
-
-        spotify.changeMap(mapInitialized);
 
         assertEquals(spotify.findLongestTrack(playlist1), track1, "This is not the track with the longest duration");
 
-        spotify.changeMap(mapEmpty);
 
     }
 
@@ -218,18 +187,16 @@ class SpotifyImplTest {
         );
         assertEquals("Playlist" + playlist1.getId() + " does not exist in Spotify.", illegalArgumentExceptionNoPlaylist.getMessage(), "Exception message should match");
 
-        /*spotify.addPlaylist(playlist1);
+        spotify.addPlaylist(playlist1);
 
         spotify.addTrackToPlaylist(playlist1, track1);
         spotify.addTrackToPlaylist(playlist1, track2);
         spotify.addTrackToPlaylist(playlist1, track3);
 
-         */
-        spotify.changeMap(mapInitialized);
 
         assertEquals(spotify.findShortestTrack(playlist1), track3, "This is not the track with the shortest duration");
 
-        spotify.changeMap(mapEmpty);
+
     }
 
     @Test
@@ -240,19 +207,15 @@ class SpotifyImplTest {
         );
         assertEquals("Playlist" + playlist1.getId() + " does not exist in Spotify.", illegalArgumentExceptionNoPlaylist.getMessage(), "Exception message should match");
 
-        /*spotify.addPlaylist(playlist1);
+        spotify.addPlaylist(playlist1);
 
         spotify.addTrackToPlaylist(playlist1, track1);
         spotify.addTrackToPlaylist(playlist1, track2);
         spotify.addTrackToPlaylist(playlist1, track3);
 
-         */
-
-        spotify.changeMap(mapInitializedV2);
 
         assertTrue(spotify.getAverageDuration(playlist1) > 0, "Average duration cannot be 0 or less");
 
-        spotify.changeMap(mapEmpty);
     }
 
     @Test
@@ -263,17 +226,15 @@ class SpotifyImplTest {
         );
         assertEquals("Playlist" + playlist1.getId() + " does not exist in Spotify.", illegalArgumentExceptionNoPlaylist.getMessage(), "Exception message should match");
 
-        /*spotify.addPlaylist(playlist1);
+        spotify.addPlaylist(playlist1);
 
         spotify.addTrackToPlaylist(playlist1, track3);
 
-         */
 
-        spotify.changeMap(mapInitialized);
 
         assertTrue(spotify.getGenres(playlist1).contains("Hard Rock"), "Genre should be in the list");
 
-        spotify.changeMap(mapEmpty);
+
     }
 
     @Test
@@ -285,9 +246,6 @@ class SpotifyImplTest {
         assertEquals("Playlist" + playlist1.getId() + " does not exist in Spotify.", illegalArgumentExceptionNoPlaylist.getMessage(), "Exception message should match");
 
 
-        spotify.changeMap(mapInitialized);
-
-        //assertTrue(spotify.getSortedGenres(playlist1) instanceof SortedSet, "Return should be a SortedSet");
 
         SortedSet<String> sortedGenres = spotify.getSortedGenres(playlist1);
         List<String> sortedGenresList = new ArrayList<>(sortedGenres);
@@ -297,7 +255,7 @@ class SpotifyImplTest {
                     "Genres should be sorted in ascending order.");
         }
 
-        spotify.changeMap(mapEmpty);
+
 
     }
 
@@ -309,7 +267,7 @@ class SpotifyImplTest {
         );
         assertEquals("Playlist" + playlist1.getId() + " does not exist in Spotify.", illegalArgumentExceptionNoPlaylist.getMessage(), "Exception message should match");
 
-        spotify.changeMap(mapInitialized);
+
 
 
         assertTrue(spotify.getTopArtists(playlist1).size() <= 5, "Top Artists should always return the top 5");
@@ -322,7 +280,7 @@ class SpotifyImplTest {
                 .anyMatch(artist -> artist.artist().equals("Ali Edwards"));
         assertFalse(containsAliEdwards, "Artist shouldn't be in the top 5");
 
-        spotify.changeMap(mapEmpty);
+
 
     }
 
@@ -331,26 +289,22 @@ class SpotifyImplTest {
 
         assertTrue(spotify.findByDates(LocalDate.of(2024, 2, 23), LocalDate.of(2024, 2, 24)).isEmpty());
 
-        /*IllegalArgumentException illegalArgumentExceptionWrongDates = assertThrows(IllegalArgumentException.class, () ->
+        IllegalArgumentException illegalArgumentExceptionWrongDates = assertThrows(IllegalArgumentException.class, () ->
                 spotify.findByDates(LocalDate.of(2024, 2, 23), LocalDate.of(2024, 2, 22))
         );
         assertEquals("You cannot put an end date that is before the start date.", illegalArgumentExceptionWrongDates.getMessage(), "Exception message should match");
-        */
 
-        /*spotify.addPlaylist(playlist1);
+
+        spotify.addPlaylist(playlist1);
         spotify.addTrackToPlaylist(playlist1, track1);
 
-         */
-
-        spotify.changeMap(mapInitialized);
 
         assertEquals(1, spotify.findByDates(LocalDate.of(2019, 4, 23), LocalDate.of(2026, 4, 27)).size());
 
-        spotify.changeMap(mapInitializedV2);
 
         assertEquals(2, spotify.findByDates(LocalDate.of(2019, 4, 23), LocalDate.of(2026, 4, 27)).size());
 
-        spotify.changeMap(mapEmpty);
+
 
 
     }
@@ -368,25 +322,23 @@ class SpotifyImplTest {
         */
 
 
-        /*spotify.addPlaylist(playlist1);
+        spotify.addPlaylist(playlist1);
         spotify.addTrackToPlaylist(playlist1, track1);
-         */
-        spotify.changeMap(mapInitialized);
+
+
 
         assertEquals(1, spotify.findByDatesByTrackDate(LocalDate.of(2019, 4, 23), LocalDate.of(2026, 4, 27), "Casey Edwards").size());
 
-        /*spotify.addPlaylist(playlist2);
+        spotify.addPlaylist(playlist2);
         spotify.addTrackToPlaylist(playlist2, track2);
 
-         */
 
-        spotify.changeMap(mapInitializedV2);
 
         assertEquals(1, spotify.findByDatesByTrackDate(LocalDate.of(2019, 4, 23), LocalDate.of(2026, 4, 27), "Ali Edwards").size());
 
         assertEquals(2, spotify.findByDatesByTrackDate(LocalDate.of(2019, 4, 23), LocalDate.of(2026, 4, 27), "Casey Edwards").size());
 
-        spotify.changeMap(mapEmpty);
+
 
     }
 
@@ -395,19 +347,17 @@ class SpotifyImplTest {
 
         assertTrue(spotify.getAllPlaylist().isEmpty());
 
-        //spotify.addPlaylist(playlist1);
+        spotify.addPlaylist(playlist1);
 
-        spotify.changeMap(mapInitialized);
 
         assertTrue(spotify.getAllPlaylist().size() == 1);
 
-        //spotify.addPlaylist(playlist2);
+        spotify.addPlaylist(playlist2);
 
-        spotify.changeMap(mapInitializedV2);
 
         assertTrue(spotify.getAllPlaylist().size() == 2);
 
-        spotify.changeMap(mapEmpty);
+
 
 
     }

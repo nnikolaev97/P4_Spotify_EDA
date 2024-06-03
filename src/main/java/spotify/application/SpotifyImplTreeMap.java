@@ -178,11 +178,6 @@ public class SpotifyImplTreeMap implements Spotify {
          return keys.stream().toList();
     }
 
-    @Override
-    public void changeMap(Map<Playlist, List<Track>> mapNew) {
-        map.clear();
-        map.putAll(mapNew);
-    }
 
     private List<String> getArtist(Playlist playlist) {
         return getTracks(playlist)
