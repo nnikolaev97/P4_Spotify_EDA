@@ -345,7 +345,7 @@ class SpotifyImplTreeMapTest {
         assertTrue(spotify.getAllPlaylist().isEmpty());
 
         spotify.addPlaylist(playlist1);
-        
+
         assertTrue(spotify.getAllPlaylist().size() == 1);
 
         spotify.addPlaylist(playlist2);
