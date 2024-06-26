@@ -53,7 +53,6 @@ class SpotifyImplTreeMapTest {
     void addPlaylist() {
         assertTrue(spotify.addPlaylist(playlist1));
         assertFalse(spotify.addPlaylist(playlist1));
-        spotify.changeMap(mapEmpty);
     }
 
     @Test
